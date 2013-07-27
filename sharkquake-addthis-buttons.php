@@ -61,11 +61,11 @@ function sharkquake_render_options(){ ?>
 // Lets add some settings
 function sharkquake_add_settings(){
 
-  register_settings(){
-    'sharkquake_settings',
-    'sharkquake_settings',
-    'sanitize_key'
-  }
+  register_settings(
+      'sharkquake_settings',
+      'sharkquake_settings',
+      'sanitize_key'
+    );
 
   add_settings_section(
       'sharkquake_main_section',
@@ -92,8 +92,12 @@ function skarkquake_main_description(){
 function sharkquake_button_position(){
   $position = get_option( 'sharkquake_addthis_settings' ); // to-do
 
-  $pos = '<label for="">AddThis Position</label>';
-  $pos .= '<input type="radio" id="addThisPosition" name="addThisPosition[position]" value="1" '.checked( 1, $position['position'], false ).' />';
+  $pos = '<label for="addThisPositionLeft">Left</label>';
+  $pos .= '<input type="radio" id="addThisPositionLeft" name="addThisPosition[position]" value="1" '.checked( 1, $position['position'], false ).' />';
+  $pos .= '<label for="addThisPositionRight">Left</label>';
+  $pos .= '<input type="radio" id="addThisPositionRight" name="addThisPosition[position]" value="2" '.checked( 2, $position['position'], false ).' />';
+
+  echo $pos;
 }
 
 
