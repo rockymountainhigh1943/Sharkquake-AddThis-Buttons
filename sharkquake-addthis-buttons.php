@@ -102,12 +102,19 @@ function sharkquake_add_settings(){
       'sharkquake_disable',
       'sanitize_key'
     );
-  /*
   add_settings_section(
       'sharkquake_disable_button',
-      __('Disable ')
+      null,
+      null,
+      'sharkquake_addthis_settings'
     );
-  */
+  add_settings_field(
+      'sharkquake_addThis_disable_field',
+      __('Disable:'),
+      'sharkquake_disable_addthis',
+      'sharkquake_addthis_settings',
+      'sharkquake_disable_button'
+    );
 
 }
 
@@ -145,6 +152,14 @@ function sharkquake_items_select(){
   $select .= '</select>';
 
   echo $select;
+}
+
+function sharkquake_disable_addthis(){
+  $status = get_option( 'sharkquake_disable', 0 );
+
+  $disable = '<input id="sharkquake_disable" name="sharkquake_disable" type="checkbox" value="1" '.checked( $status, 1, false ).'/>';
+
+  echo $disable;
 }
 
 
