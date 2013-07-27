@@ -31,7 +31,7 @@ add_action( 'wp_enqueue_scripts', 'jakes_shakquake_enqueue_scripts' );
 // Some logic to create our options page
 function give_me_some_options(){
   add_options_page(
-      __('Sharkquake AddThis Settings'),
+      __('Sharkquake AddThis'),
       __('Sharkquake AddThis'),
       'manage_options',
       'sharkquake_addthis_settings',
@@ -66,7 +66,7 @@ function sharkquake_add_settings(){
     );
   add_settings_section(
       'sharkquake_main_section',
-      __('Positioning Settings'),
+      __('Settings'),
       'skarkquake_main_description',
       'sharkquake_addthis_settings'
     );
@@ -85,8 +85,8 @@ function sharkquake_add_settings(){
     );
   add_settings_section(
       'sharkquake_items_section',
-      __('Quantity Settings'),
-      'sharkquake_items_description',
+      null,
+      null,
       'sharkquake_addthis_settings'     
     );
   add_settings_field(
@@ -97,9 +97,17 @@ function sharkquake_add_settings(){
       'sharkquake_items_section'
     );
 
-
-
-
+  register_setting(
+      'sharkquake_position',
+      'sharkquake_disable',
+      'sanitize_key'
+    );
+  /*
+  add_settings_section(
+      'sharkquake_disable_button',
+      __('Disable ')
+    );
+  */
 
 }
 
@@ -125,7 +133,7 @@ function sharkquake_items_description(){
 }
 
 function sharkquake_items_select(){
-  $items = get_option( 'sharkquake_items', 0 );
+  $items = get_option( 'sharkquake_items', 1 );
 
   $select = '<select id="sharkquake_items" name="sharkquake_items">';
     $select .= '<option value="1" '.selected( $items, 1, false ).'>1</option>';
@@ -149,13 +157,14 @@ function Sharkquake_AddThis_Buttons () {
   } else {
     $render = 'right';
   }
+  $items = get_option('sharkquake_items', 1);
 	$theButtonShark = "
 		<script type='text/javascript'>
 		  addthis.layers({
 		    'theme' : 'transparent',
 		    'share' : {
 		      'position' : '".$render."',
-		      'numPreferredServices' : 6
+		      'numPreferredServices' : ".$items."
 		    }   
 		  });
 		</script>
