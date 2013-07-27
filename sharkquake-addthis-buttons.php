@@ -61,7 +61,7 @@ function sharkquake_render_options(){ ?>
 // Lets add some settings
 function sharkquake_add_settings(){
 
-  register_settings(
+  register_setting(
       'sharkquake_settings',
       'sharkquake_settings',
       'sanitize_key'
@@ -86,7 +86,7 @@ function sharkquake_add_settings(){
 add_action( 'admin_init', 'sharkquake_add_settings' );
 
 function skarkquake_main_description(){
-  echo '<p>Use the below settings to fine-tune your social media sharing experience. Also be sure to post interesting articles. Churck Norris rocks.</p>'
+  echo '<p>Use the below settings to fine-tune your social media sharing experience. Also be sure to post interesting articles. Churck Norris rocks.</p>';
 }
 
 function sharkquake_button_position(){
