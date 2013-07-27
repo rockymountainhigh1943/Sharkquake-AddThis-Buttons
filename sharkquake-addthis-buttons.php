@@ -13,7 +13,7 @@ License: GPL2
 
 function jakes_shakquake_enqueue_scripts(){
 	if ( is_single() ){
-		wp_enqueue_scripts(
+		wp_enqueue_script(
 				'addThis-shakquake-style',
 				'//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51f3248a1680dbb8',
 				array(),
@@ -23,10 +23,7 @@ function jakes_shakquake_enqueue_scripts(){
 	}
 }
 
-
 add_action( 'wp_enqueue_scripts', 'jakes_shakquake_enqueue_scripts' );
-
-
 
 
 function Sharkquake_AddThis_Buttons () {
