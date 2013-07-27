@@ -57,21 +57,19 @@ function sharkquake_render_options(){ ?>
 <?php }
 
 // Lets add some settings
-function sharkquake_add_positioning_settings(){
+function sharkquake_add_settings(){
 
   register_setting(
       'sharkquake_position',
       'sharkquake_position',
       'sanitize_key'
     );
-
   add_settings_section(
       'sharkquake_main_section',
       __('Positioning Settings'),
       'skarkquake_main_description',
       'sharkquake_addthis_settings'
     );
-
   add_settings_field(
       'sharkquake_addThis_position_field',
       __('Position:'),
@@ -79,9 +77,33 @@ function sharkquake_add_positioning_settings(){
       'sharkquake_addthis_settings',
       'sharkquake_main_section'
     );
+
+  register_setting(
+      'sharkquake_position',
+      'sharkquake_items',
+      'sanitize_key'
+    );
+  add_settings_section(
+      'sharkquake_items_section',
+      __('Quantity Settings'),
+      'sharkquake_items_description',
+      'sharkquake_addthis_settings'     
+    );
+  add_settings_field(
+      'sharkquake_addThis_items_field',
+      __('Items:'),
+      'sharkquake_items_select',
+      'sharkquake_addthis_settings',
+      'sharkquake_items_section'
+    );
+
+
+
+
+
 }
 
-add_action( 'admin_init', 'sharkquake_add_positioning_settings' );
+add_action( 'admin_init', 'sharkquake_add_settings' );
 
 function skarkquake_main_description(){
   echo '<p>Use the below settings to fine-tune your social media sharing experience. Also be sure to post interesting articles. Churck Norris rocks.</p>';
@@ -98,13 +120,30 @@ function sharkquake_button_position(){
   echo $pos;
 }
 
+function sharkquake_items_description(){
+  echo '<p>Here we can set the number of social sharing methods to be displayed on screen. You may select any number to display from 1-6.</p>';
+}
 
+function sharkquake_items_select(){
+  $items = get_option( 'sharkquake_items', 0 );
+
+  $select = '<select id="sharkquake_items" name="sharkquake_items">';
+    $select .= '<option value="1" '.selected( $items, 1, false ).'>1</option>';
+    $select .= '<option value="2" '.selected( $items, 2, false ).'>2</option>';
+    $select .= '<option value="3" '.selected( $items, 3, false ).'>3</option>';
+    $select .= '<option value="4" '.selected( $items, 4, false ).'>4</option>';
+    $select .= '<option value="5" '.selected( $items, 5, false ).'>5</option>';
+    $select .= '<option value="6" '.selected( $items, 6, false ).'>6</option>';
+  $select .= '</select>';
+
+  echo $select;
+}
 
 
 
 // Lets add the final product to the footer
 function Sharkquake_AddThis_Buttons () {
-  $position = get_option( 'sharkquake_position' );
+  $position = get_option( 'sharkquake_position', 'left' );
   if ( $position == 1 ){
     $render = 'left';
   } else {
