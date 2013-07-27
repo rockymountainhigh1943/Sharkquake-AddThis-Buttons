@@ -13,7 +13,8 @@ License: GPL2
 
 // Lets Add our script to the footer
 function jakes_shakquake_enqueue_scripts(){
-	if ( is_single() ){
+  $disabled = get_option( 'sharkquake_disable', 0 );
+	if ( is_single() && $disabled == 0 ){
 		wp_enqueue_script(
 				'addThis-shakquake-style',
 				'//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51f3248a1680dbb8',
@@ -163,29 +164,31 @@ function sharkquake_disable_addthis(){
 }
 
 
-
 // Lets add the final product to the footer
 function Sharkquake_AddThis_Buttons () {
-  $position = get_option( 'sharkquake_position', 'left' );
-  if ( $position == 1 ){
-    $render = 'left';
-  } else {
-    $render = 'right';
+  $disabled = get_option( 'sharkquake_disable', 0 );
+  if ( $disabled == 0 ){
+    $position = get_option( 'sharkquake_position', 'left' );
+    if ( $position == 1 ){
+      $render = 'left';
+    } else {
+      $render = 'right';
+    }
+    $items = get_option('sharkquake_items', 1);
+  	$theButtonShark = "
+  		<script type='text/javascript'>
+  		  addthis.layers({
+  		    'theme' : 'transparent',
+  		    'share' : {
+  		      'position' : '".$render."',
+  		      'numPreferredServices' : ".$items."
+  		    }   
+  		  });
+  		</script>
+  		<!-- AddThis ".$position." -->
+  	";
+  	echo $theButtonShark;
   }
-  $items = get_option('sharkquake_items', 1);
-	$theButtonShark = "
-		<script type='text/javascript'>
-		  addthis.layers({
-		    'theme' : 'transparent',
-		    'share' : {
-		      'position' : '".$render."',
-		      'numPreferredServices' : ".$items."
-		    }   
-		  });
-		</script>
-		<!-- AddThis ".$position." -->
-	";
-	echo $theButtonShark;
 }
 
 add_action( 'wp_footer', 'Sharkquake_AddThis_Buttons', 100 );
