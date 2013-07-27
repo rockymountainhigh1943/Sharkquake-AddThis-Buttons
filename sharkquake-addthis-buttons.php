@@ -47,7 +47,8 @@ function sharkquake_render_options(){ ?>
     <?php screen_icon(); ?>
     <h2><?php _e('Sharkquake AddThis Settings'); ?></h2>
     <form action="options.php" method="post">
-      
+      <?php settings_fields('sharkquake_settings'); ?>
+      <?php do_settings_sections( 'sharkquake_addthis_settings' ); ?>
       
 
       <p class="submit">
@@ -61,7 +62,9 @@ function sharkquake_render_options(){ ?>
 function sharkquake_add_settings(){
 
   register_settings(){
-
+    'sharkquake_settings',
+    'sharkquake_settings',
+    'sanitize_key'
   }
 
   add_settings_section(
@@ -87,7 +90,7 @@ function skarkquake_main_description(){
 }
 
 function sharkquake_button_position(){
-  $position = get_option(); // to-do
+  $position = get_option( 'sharkquake_addthis_settings' ); // to-do
 
   $pos = '<label for="">AddThis Position</label>';
   $pos .= '<input type="radio" id="addThisPosition" name="addThisPosition[position]" value="1" '.checked( 1, $position['position'], false ).' />';
