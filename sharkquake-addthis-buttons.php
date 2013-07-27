@@ -23,6 +23,7 @@ function jakes_shakquake_enqueue_scripts(){
 	}
 }
 
+
 add_action( 'wp_enqueue_scripts', 'jakes_shakquake_enqueue_scripts' );
 
 
