@@ -39,9 +39,10 @@ function Sharkquake_AddThis_Buttons () {
 		</script>
 		<!-- AddThis Smart Layers END -->
 	";
-	
+	echo $theButtonShark;
 }
 
+add_action( 'wp_footer', 'Sharkquake_AddThis_Buttons', 100 );
 
 
 
