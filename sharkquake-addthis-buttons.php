@@ -34,7 +34,7 @@ function give_me_some_options(){
       __('Sharkquake AddThis Settings'),
       __('Sharkquake AddThis'),
       'manage_options',
-      'sharkquake_addThis_options',
+      'sharkquake_addthis_settings',
       'sharkquake_render_options'
     );
 }
@@ -47,10 +47,8 @@ function sharkquake_render_options(){ ?>
     <?php screen_icon(); ?>
     <h2><?php _e('Sharkquake AddThis Settings'); ?></h2>
     <form action="options.php" method="post">
-      <?php settings_fields('sharkquake_settings'); ?>
+      <?php settings_fields('sharkquake_position'); ?>
       <?php do_settings_sections( 'sharkquake_addthis_settings' ); ?>
-      
-
       <p class="submit">
         <input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e('Save It!'); ?>">
       </p>
@@ -59,43 +57,43 @@ function sharkquake_render_options(){ ?>
 <?php }
 
 // Lets add some settings
-function sharkquake_add_settings(){
+function sharkquake_add_positioning_settings(){
 
   register_setting(
-      'sharkquake_settings',
-      'sharkquake_settings',
+      'sharkquake_position',
+      'sharkquake_position',
       'sanitize_key'
     );
 
   add_settings_section(
       'sharkquake_main_section',
       __('Positioning Settings'),
-      'sharkquake_main_description',
+      'skarkquake_main_description',
       'sharkquake_addthis_settings'
     );
 
   add_settings_field(
       'sharkquake_addThis_position_field',
-      __('Sharkquake addThis Position'),
+      __('Position:'),
       'sharkquake_button_position',
       'sharkquake_addthis_settings',
       'sharkquake_main_section'
     );
 }
 
-add_action( 'admin_init', 'sharkquake_add_settings' );
+add_action( 'admin_init', 'sharkquake_add_positioning_settings' );
 
 function skarkquake_main_description(){
   echo '<p>Use the below settings to fine-tune your social media sharing experience. Also be sure to post interesting articles. Churck Norris rocks.</p>';
 }
 
 function sharkquake_button_position(){
-  $position = get_option( 'sharkquake_addthis_settings' ); // to-do
+  $position = get_option( 'sharkquake_position', 0 ); // to-do
 
-  $pos = '<label for="addThisPositionLeft">Left</label>';
-  $pos .= '<input type="radio" id="addThisPositionLeft" name="addThisPosition[position]" value="1" '.checked( 1, $position['position'], false ).' />';
-  $pos .= '<label for="addThisPositionRight">Left</label>';
-  $pos .= '<input type="radio" id="addThisPositionRight" name="addThisPosition[position]" value="2" '.checked( 2, $position['position'], false ).' />';
+  $pos = '<input type="radio" id="addThisPositionLeft" name="sharkquake_position" value="1" '.checked( $position, 1, false ).' />';
+  $pos .= '<label for="addThisPositionLeft"> Left</label> ';
+  $pos .= '&nbsp;&nbsp;&nbsp;<input type="radio" id="addThisPositionRight" name="sharkquake_position" value="2" '.checked( $position, 2, false ).' />';
+  $pos .= '<label for="addThisPositionRight"> Right</label> ';
 
   echo $pos;
 }
@@ -106,17 +104,23 @@ function sharkquake_button_position(){
 
 // Lets add the final product to the footer
 function Sharkquake_AddThis_Buttons () {
+  $position = get_option( 'sharkquake_position' );
+  if ( $position == 1 ){
+    $render = 'left';
+  } else {
+    $render = 'right';
+  }
 	$theButtonShark = "
 		<script type='text/javascript'>
 		  addthis.layers({
 		    'theme' : 'transparent',
 		    'share' : {
-		      'position' : 'left',
+		      'position' : '".$render."',
 		      'numPreferredServices' : 6
 		    }   
 		  });
 		</script>
-		<!-- AddThis Smart Layers END -->
+		<!-- AddThis ".$position." -->
 	";
 	echo $theButtonShark;
 }
